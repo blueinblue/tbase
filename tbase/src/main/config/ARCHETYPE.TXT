@@ -10,20 +10,7 @@ PagingConfig
  UserSearchAction
   - Import statements
   
-** 
-Modify the eclipse config file: src/main/resources/archtype-resources/.settings/org.eclipse.wst.common.component
-- Add to the top of the file:
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 
-- Change the line
-	<property name="context-root" value="tbase"/>
-  to
-  	<property name="context-root" value="${rootArtifactId}"/>
- 
- 
-**
 Modify the properties file: main/resources/appconfig/application.properties
 - Add the maven #set header
 
@@ -32,10 +19,33 @@ Modify the properties file: main/resources/appconfig/application.properties
   to
   	app.title=${rootArtifactId}
  
- Re-Creating The Archetype
+**
+Re-Creating The Archetype
  - Modify the base project as necessary.
  - At command line at base project root,
  	mvn clean
  
  	mvn archetype:create-from-project
+ 	
+Copy the target/generated-sources/archetype (src and pom.xml) to separate project
+
+Make the modifications listed above for escape sequences
  
+Modify the archetype project's pom.xml, set groupId, artifactId, version to the target of the archetype.
+
+On the command line, at the archetype project root, execute:
+	mvn install
+	
+This generates a jar file for the archetype.
+
+Deploy the jar file to Artifactory.
+	Target: archetypes-release-local
+	Update Maven Artifact's group id 
+	Check the 'Generate Default POM' box
+	
+Modify the Artifactory archetype-catalog with the version of the archetype.
+	- Download the catalog file from artifactory, modify it.
+	- Click the Deploy button to re-upload it
+	
+Copy the file to your local archetype repo holding area.
+	
