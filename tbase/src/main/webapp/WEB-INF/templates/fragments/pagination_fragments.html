@@ -1,0 +1,61 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<!--
+		pager fragment: Provides an AJAX enabled Bootstrap 3 pagination bar.  NOTE: Your page must provide the javascript for invoking the AJAX call.  All of the pager related anchors have a class
+		called "pager-link".  If a link is not applicable to the current state (previous button on first page, for example) the link will have the class "disabled."
+		
+		Each link submits the followinng request parameters:
+		_eventId: The WebFlow event ID (dataReqEventIdStr)
+		ajaxSource: true (let's webflow know we're making an ajax request)
+		pageNumber: the page number we are requesting
+		sort: the Spring Data sort string, parseable by a PageRequestFactory instance
+		
+		You must pass in all of the following required arguments to the fragment:
+		
+		page: The Spring Data Page instance containing the pageble data.
+		window: The PaginationWindow instances containing the start, current, and end indexes.
+		dataReqEventIdStr: The Spring WebFlow event ID to submit when requesting a new data page.
+	-->
+	<div th:fragment="pager(page, window, dataReqEventIdStr)">
+		<ul class="pagination text-center">
+			<li th:classappend="${page.hasPrevious()} ? _ : disabled">
+				<a class="pager-link" th:classappend="${page.hasPrevious()} ? _ : disabled" th:href="@{'~' + ${flowExecutionUrl}(_eventId=${dataReqEventIdStr},ajaxSource='true',pageNumber=${page.previousPageable()?.pageNumber},sort=${page.sort})}">&laquo;</a>
+			</li>
+			
+			<li th:each="i, iterStat : ${#numbers.sequence(window.startIndex, window.endIndex)}" th:classappend="${window.currentIndex eq i} ? active : _">
+				<a class="pager-link" th:href="@{'~' + ${flowExecutionUrl}(_eventId=${dataReqEventIdStr},ajaxSource='true',pageNumber=${i},sort=${page.sort})}" th:text="${i + 1}"></a>
+			</li>
+			
+			<li th:classappend="${page.hasNext()} ? _ : disabled">
+				<a class="pager-link" th:classappend="${page.hasNext()} ? _ : disabled" th:href="@{'~' + ${flowExecutionUrl}(_eventId=${dataReqEventIdStr},ajaxSource='true',pageNumber=${page.nextPageable()?.pageNumber},sort=${page.sort})}">&raquo;</a>
+			</li>
+		</ul>
+	</div>
+	
+	<!--
+		pagerSortHeader fragment: Provides an AJAX enabled link for sorting a table of data. 
+		
+		NOTE: Your page must supply the javascript for handling the AJAX call.  The anchor tag has the class "pager-link".  The href attrib is ready to submit.
+		
+		The link submits the followinng request parameters:
+		_eventId: The WebFlow event ID (dataReqEventIdStr)
+		ajaxSource: true (let's webflow know we're making an ajax request)
+		pageNumber: the page number we are requesting
+		sort: the Spring Data sort string, parseable by a PageRequestFactory instance
+		
+		You must supply all of the following required arguments:
+		
+		headerStr: Text to serve as the link's text/label
+		propertyNameStr: The POJO property name passed to Spring Data for sorting
+		page: The Spring Data Page instance containing the pageable data
+		dataReqEventIdStr: The Spring WebFlow event ID to submit when requesting a new data page (or in this case, a sorted data page)
+	 -->
+	<div th:fragment="pagerSortHeader(headerStr, propertyNameStr, page, dataReqEventIdStr)">
+		<a class="pager-link" th:href="@{'~' + ${flowExecutionUrl}(_eventId=${dataReqEventIdStr},ajaxSource='true',pageNumber=${page.number},sort=(${page.sort?.getOrderFor('__${propertyNameStr}__')?.ascending} ? '__${propertyNameStr}__: DESC' : '__${propertyNameStr}__: ASC'))}"
+			th:text="${headerStr}">
+		</a>
+	</div>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+	
+	<!-- Text Fields (sm,md,lg represents the width of the text input field) -->
+	<div th:fragment="text-sm(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, 'text',
+			${@fragmentLayout.get('horzForm-sm-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-sm-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-sm-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="text-md(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, 'text',
+			${@fragmentLayout.get('horzForm-md-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-md-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-md-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="text-lg(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, 'text',
+			${@fragmentLayout.get('horzForm-lg-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-lg-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-lg-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<!-- Input Fields - User specified type -->
+	<div th:fragment="input-sm(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, ${inputType},
+			${@fragmentLayout.get('horzForm-sm-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-sm-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-sm-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="input-md(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, ${inputType},
+			${@fragmentLayout.get('horzForm-md-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-md-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-md-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="input-lg(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, ${inputType},
+			${@fragmentLayout.get('horzForm-lg-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-lg-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-lg-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<!--
+		Input field
+		
+		fieldName: The property on the form object, may be nested
+		label: human readable label for the field
+		inputType: HTML5 input type, ie text, date, color, etc
+		labelWidthClass: Bootstrap 3 grid-column width, ie col-md-2
+		inputWidthClass: Bootstrap 3 grid-coloumn width of input section, ie col-md-5
+		errorWidthClass: Bootstrap 3 error width, ie "col-md-10 col-md-offset-2"
+		required: true/false, if true then 'required' class appended to form-group div
+		helpText: if not empty/null, text appears as a help block
+		placeholderText: if not empty/null, text appears as a placeholder
+	 -->
+	<div th:fragment="fieldInput(fieldName, label, inputType, labelWidthClass, inputWidthClass, errorWidthClass)">
+		<div class="form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''} + ' ' + ${#bools.isTrue(required) ? 'required' : ''}">
+			<label th:for="${fieldName}" class="control-label" th:classappend="${labelWidthClass}" th:text="${label}"></label>
+			
+			<div th:class="${inputWidthClass}">
+				<input th:type="${inputType}" class="form-control" th:field="*{__${fieldName}__}" th:placeholder="${#strings.isEmpty(placeholderText) ? '' : '__${placeholderText}__'}"/>
+				<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false}"></p>
+			</div>
+			
+			<div class="text-danger custom-error-msg" th:classappend="${errorWidthClass}" th:errors="*{__${fieldName}__}">Error Message</div>
+		</div>
+	</div>
+	
+	<!-- Inline Yes/No Radio Buttons-->
+	<div th:fragment="yesNoRB(fieldName, label)">
+		<div th:replace=":: inlineRB(${fieldName}, ${label}, ${T(org.bib.tbase.domain.display.YesNoDisplayable).values()})">
+		</div>
+	</div>
+	
+	<!-- Inline Radio Buttons; dispValues must be a collection of Displayable instances -->
+	<div th:fragment="inlineRB(fieldName, label, dispValues)">
+		<div th:replace=":: selectGroup(${fieldName}, ${label}, 'radio', true, ${dispValues},
+			${@fragmentLayout.get('horzForm-inlineSelect-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-inlineSelect-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-inlineSelect-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<!-- Inline Checkboxes; dispValues must be a collection of Displayable instances -->
+	<div th:fragment="inlineCB(fieldName, label, dispValues)">
+		<div th:replace=":: selectGroup(${fieldName}, ${label}, 'checkbox', true, ${dispValues},
+			${@fragmentLayout.get('horzForm-inlineSelect-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-inlineSelect-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-inlineSelect-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<!-- Stacked Radio Buttons; dispValues must be a collection of Displayable instances -->
+	<div th:fragment="stackedRB(fieldName, label, dispValues)">
+		<div th:replace=":: selectGroup(${fieldName}, ${label}, 'radio', false, ${dispValues},
+			${@fragmentLayout.get('horzForm-inlineSelect-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-inlineSelect-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-inlineSelect-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<!-- Stacked Check Boxes; dispValues must be a collection of Displayable instances -->
+	<div th:fragment="stackedCB(fieldName, label, dispValues)">
+		<div th:replace=":: selectGroup(${fieldName}, ${label}, 'checkbox', false, ${dispValues},
+			${@fragmentLayout.get('horzForm-inlineSelect-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-inlineSelect-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-inlineSelect-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<!--
+		A group of checkboxes or radio buttons, displayed either inline or stacked, backed by a Collection of Displayable instances.
+		
+		inputType: radio or checkbox, required
+		isInline: true or false (false for stacked), required
+		values: a Collection of Displayable instances 
+	 -->
+	<div th:fragment="selectGroup(fieldName, label, inputType, isInline, values, labelWidthClass, inputWidthClass, errorWidthClass)">
+		<div class="form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''}  + ' ' + ${#bools.isTrue(required) ? 'required' : ''}">
+			<label th:for="${fieldName}" class="control-label" th:classappend="${labelWidthClass}" th:text="${label}"></label>
+			
+			<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false}"></p>
+			
+			<div th:class="${inputWidthClass}" th:style="${isInline eq false ? 'padding-left: 40px;' : ''}">
+				<label th:each="dispObj : ${values}" th:class="${isInline ? '__${inputType + '-inline'}__' : '__${inputType}__'}" style="font-weight: normal">
+					
+					<input th:type="${inputType}" th:field="*{__${fieldName}__}" th:value="${dispObj.value}"></input>
+					<span th:text="${dispObj.displayName}"></span>
+				</label>
+			</div>
+			
+			<div class="text-danger custom-error-msg" th:classappend="${errorWidthClass}" th:errors="*{__${fieldName}__}"></div>
+		</div>
+	</div>
+	
+	<!--
+		Drop down select, backed by a Collection of Displayable instances.
+		
+		values: A Collection of Displayable instances, never null
+		includeEmpty: true/false, if true then an empty option is included in the list 
+	 -->
+	<div th:fragment="dropDown(fieldName, label, values, includeEmpty, labelWidthClass, inputWidthClass, errorWidthClass)">
+		<div class="form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''} + ' ' + ${#bools.isTrue(required) ? 'required' : ''}">
+			<label th:for="${fieldName}" class="control-label" th:classappend="${labelWidthClass}" th:text="${label}"></label>
+			
+			<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false}"></p>
+			
+			<div th:class="${inputWidthClass}">
+				<select class="form-control" th:field="*{__${fieldName}__}">
+					<option th:value="${null}" th:text="${''}" th:if="${includeEmpty}"></option>
+					<option th:each="dispObj : ${values}"
+						th:value="${dispObj.value}" th:text="${dispObj.displayName}" />
+				</select>
+			</div>
+			
+			<div class="text-danger custom-error-msg" th:classappend="${errorWidthClass}" th:errors="*{__${fieldName}__}"></div>
+		</div>
+	</div>
+	
+	<div th:fragment="dropDown-sm(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('horzForm-sm-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-sm-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-dropDown-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="dropDown-md(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('horzForm-md-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-md-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-dropDown-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="dropDown-lg(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('horzForm-lg-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-lg-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-dropDown-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<!-- Bootstrap-Select Multi Select Drop Down -->
+	<div th:fragment="multiDropDown-sm(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, ${values},
+			${@fragmentLayout.get('horzForm-sm-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-sm-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-dropDown-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown-md(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, ${values},
+			${@fragmentLayout.get('horzForm-md-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-md-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-dropDown-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown-lg(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, ${values},
+			${@fragmentLayout.get('horzForm-lg-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-lg-inputWidthClass')}, 
+			${@fragmentLayout.get('horzForm-dropDown-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown(fieldName, label, values, labelWidthClass, inputWidthClass, errorWidthClass)">
+		<div class="form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''} + ' ' + ${#bools.isTrue(required) ? 'required' : ''}">
+			<label th:for="${fieldName}" class="control-label" th:classappend="${labelWidthClass}" th:text="${label}"></label>
+			
+			<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false}"></p>
+				
+			<div th:class="${inputWidthClass}">
+				<select class="selectpicker form-control" data-style="btn-default" multiple="multiple" th:field="*{__${fieldName}__}">
+					<option th:each="dispObj : ${values}" th:value="${dispObj.value}" th:text="${dispObj.displayName}" />
+				</select>
+			</div>
+			
+			<div class="text-danger custom-error-msg" th:classappend="${errorWidthClass}" th:errors="*{__${fieldName}__}"></div>
+		</div>
+	</div>
+	
+	<!-- Static Field -->
+	<div th:fragment="staticField(fieldName, label, labelWidthClass, inputWidthClass)">
+		<div class="form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''}">
+			<label th:for="${fieldName}" class="control-label" th:classappend="${labelWidthClass}" th:text="${label}"></label>
+			
+			<div th:class="${inputWidthClass}">
+				<p class="form-control-static" th:text="*{__${fieldName}__}"></p>
+			</div>
+		</div>
+	</div>
+	
+	<div th:fragment="static-sm(fieldName, label)">
+		<div th:replace=":: staticField(${fieldName}, ${label}, 
+			${@fragmentLayout.get('horzForm-sm-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-sm-inputWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="static-md(fieldName, label)">
+		<div th:replace=":: staticField(${fieldName}, ${label}, 
+			${@fragmentLayout.get('horzForm-md-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-md-inputWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="static-lg(fieldName, label)">
+		<div th:replace=":: staticField(${fieldName}, ${label}, 
+			${@fragmentLayout.get('horzForm-lg-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-lg-inputWidthClass')})">
+		</div>
+	</div>
+	
+	<!-- Text Area -->
+	<div th:fragment="textAreaField(fieldName, label, rows, labelWidthClass, inputWidthClass, errorWidthClass)">
+		<div class="form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''}">
+			<label th:for="${fieldName}" class="control-label" th:classappend="${labelWidthClass}" th:text="${label}" style="padding-top: 0px;"></label>
+			
+			<div th:class="${inputWidthClass}">
+				<textarea class="form-control" th:rows="${rows}"></textarea>
+			</div>
+			
+			<div class="text-danger custom-error-msg" th:classappend="${errorWidthClass}" th:errors="*{__${fieldName}__}"></div>
+		</div>
+	</div>
+	
+	<div th:fragment="textArea-sm(fieldName, label, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${rows}, 
+			${@fragmentLayout.get('horzForm-sm-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-sm-inputWidthClass')},
+			${@fragmentLayout.get('horzForm-sm-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="textArea-md(fieldName, label, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${rows}, 
+			${@fragmentLayout.get('horzForm-md-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-md-inputWidthClass')},
+			${@fragmentLayout.get('horzForm-md-errorWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="textArea-lg(fieldName, label, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${rows}, 
+			${@fragmentLayout.get('horzForm-lg-labelWidthClass')}, 
+			${@fragmentLayout.get('horzForm-lg-inputWidthClass')},
+			${@fragmentLayout.get('horzForm-lg-errorWidthClass')})">
+		</div>
+	</div>
+</html>

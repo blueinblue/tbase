@@ -1,0 +1,101 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+	
+	<head>
+		<title>User Registration Details</title>
+	</head>
+	
+	<body>
+		<div layout:fragment="content">
+			<!-- Global Status/Error Messages -->
+			<div th:replace="layout/fragments/messages :: messages">
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					New User Registration
+				</div>
+				
+				<div class="panel-body">
+					<form th:action="${flowExecutionUrl}" th:object="${userRegForm}" method="post" class="form form-inline">
+						<div th:insert="fragments/inline_form_fragments :: lbl-text-sm('email', 'E-mail')" th:remove="tag"
+							th:with="required=true,placeholderText='Your email address will never be shown'"></div>
+						
+						<div th:insert="fragments/inline_form_fragments :: lbl-text-sm('displayName', 'Display Name')" th:remove="tag"
+							th:with="required=true,placeholderText='How you will appear to others on the site'"></div>
+						
+						<div th:insert="fragments/inline_form_fragments :: lbl-input-sm('birthday', 'Birthday', 'date')" th:remove="tag"></div>
+						
+						<div class="clearfix">&nbsp;</div>
+							
+						<div th:insert="fragments/inline_form_fragments :: lbl-input-sm('password', 'Password', 'password')" th:remove="tag"
+							th:with="required=true"></div>
+						
+						<div th:insert="fragments/inline_form_fragments :: lbl-input-sm('passwordConfirm', 'Confirm Password', 'password')" th:remove="tag"
+							th:with="required=true"></div>
+						
+						<div class="clearfix">&nbsp;</div>
+					
+						<div th:replace="fragments/inline_form_fragments :: stackedCB('interests', 'Interests', true, ${T(org.bib.tbase.web.flow.system.userreg.UserRegForm.Interest).values()}, 'col-sm-6')"></div>
+						
+						<div th:insert="fragments/inline_form_fragments :: lbl-dropDown-sm('primaryInterest', 'Primary Interest', ${T(org.bib.tbase.web.flow.system.userreg.UserRegForm.Interest).values()}, true)"
+							th:remove="tag"></div>
+						
+						<div class="clearfix">&nbsp;</div>
+						
+						<div th:insert="fragments/inline_form_fragments :: textArea-md('message', 'Message', true, 6)"
+							th:remove="tag" th:with="placeholderText='Write a message to the sysop letting him know how you found the system.'"></div>
+						
+						<div class="clearfix">&nbsp;</div>
+						
+						<div class="form-group" style="margin-top: 20px;">
+							<button id="dialogButton" type="button" class="btn btn-default">User Agreement</button>
+							<button type="submit" id="next" name="_eventId_next" class="btn btn-primary">Next</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<div th:replace="fragments/dialog_fragments :: modalDialog('my-modal-dialog', 'My Modal Dialog', ~{::#modalContentDiv})">
+			
+				<div id="modalContentDiv" th:fragment="modalContentDiv">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h4 th:text="${systemMessage}"></h4>
+							
+							<p>
+							You agree to be a reasonable person - is that so much to ask?
+						</div>
+						
+						<div class="panel-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+				
+			</div>			
+		</div> <!-- Content Container -->
+		
+		<th:block layout:fragment="script">
+			<script th:inline="javascript">
+			/*<![CDATA[*/
+				$(document).ready(function() {
+					$("#dialogButton").click(function(evt) {
+						evt.preventDefault();
+						
+						var ajaxUrl = [[@{'~' + ${flowExecutionUrl}(_eventId='retrieveSystemMessage',ajaxSource='true')}]];
+				    	//  + " #my-modal-dialog-body-details"
+				    	$("#my-modal-dialog-body").load(ajaxUrl);
+				    	
+						$("#my-modal-dialog").modal("show");
+					});
+				}); // $(document.ready)
+				/*]]>*/
+			</script>
+		</th:block>
+	</body>
+</html>

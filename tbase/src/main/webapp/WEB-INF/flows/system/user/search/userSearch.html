@@ -1,0 +1,124 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+	
+	<head>
+		<title>User Search</title>
+	</head>
+	
+	<body>
+		<div layout:fragment="content">
+			<!-- Global Status/Error Messages -->
+			<div th:replace="layout/fragments/messages :: messages">
+			</div>
+			
+			<!-- Search Fields -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					User Search
+				</div>
+				
+				<div class="panel-body">
+					<form th:action="${flowExecutionUrl}" th:object="${userSearchForm}" method="post" class="form form-inline">
+						<div th:insert="fragments/inline_form_fragments :: lbl-text-md('email', 'E-mail')" th:remove="tag"
+							th:with="placeholderText='Fuzzy search'"></div>
+							
+						<div th:insert="fragments/inline_form_fragments :: lbl-text-md('displayName', 'Display Name')" th:remove="tag"
+							th:with="placeholderText='Fuzzy search'"></div>
+							
+						<div th:replace="fragments/inline_form_fragments ::  inlineRB('enabled', 'Account Enabled?', true, ${@yesNoAnyValues}, 'col-sm-6')"></div>
+						
+						<div th:replace="fragments/inline_form_fragments :: lbl-multiDropDown-md('roles', 'Roles', ${allRoles})"></div>
+						
+						<div class="clearfix"></div>
+						
+						<div class="form-group margin-top-15 pull-right">
+							<button type="submit" id="search" name="_eventId_search" class="btn btn-primary">Search</button>
+							<button type="submit" id="close" name="_eventId_close" class="btn btn-default">Close</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<!-- Results Table -->
+			<div id="userTableContainer" class="table-responsive" th:if="${userPage?.totalElements > 0}">
+				<div id="userTableFragment" th:fragment="userTableFragment">
+					<table id="userTable" class="table table-striped">
+						<thead>
+							<tr>
+								<th>
+									<div th:replace="fragments/pagination_fragments :: pagerSortHeader('ID', 'id', ${userPage}, 'pageRequest')"></div>
+								</th>
+								
+								<th>
+									<div th:replace="fragments/pagination_fragments :: pagerSortHeader('Email', 'email', ${userPage}, 'pageRequest')"></div>
+								</th>
+								
+								<th>
+									<div th:replace="fragments/pagination_fragments :: pagerSortHeader('Name', 'name', ${userPage}, 'pageRequest')"></div>
+								</th>
+								
+								<th>
+									<div th:replace="fragments/pagination_fragments :: pagerSortHeader('Enabled?', 'enabled', ${userPage}, 'pageRequest')"></div>
+								</th>
+								
+								<th></th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr th:each="user : ${userPage}">
+								<td th:text="${user.id}" />
+								<td th:text="${user.email}" />
+								<td th:text="${user.name}" />
+								<td th:text="${user.enabled ? 'Yes' : 'No'}" />
+								
+								<td>
+									<div th:replace="system/user/fragments/commandFragments :: ${commandFragment}(${user.id})"></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div class="text-center">
+						<!-- Table Pager Fragment -->
+						<div th:replace="fragments/pagination_fragments :: pager(${userPage}, ${window}, 'pageRequest')"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="alert alert-info" th:if="${userPage ne null and userPage?.totalElements <= 0}">
+				No Results.
+			</div>
+			<!-- End Results Table -->
+		</div> <!-- Content Fragment div -->
+		
+		<th:block layout:fragment="script">
+			<script th:inline="javascript">
+			/*<![CDATA[*/
+				$(document).ready(function() {
+					/*
+					 * Handle pager and sorting links in the display table
+					 */
+				    $("#userTableContainer").on("click", "a.pager-link", function(evt) {
+				    	evt.preventDefault();
+				    	
+				    	var link = $(this);
+				    	
+				    	if(link.hasClass("pager-link")) {
+				    		evt.preventDefault();
+				    		
+				    		if(!link.hasClass("disabled")) {
+				    			$("#userTableContainer").load(link.attr("href"));
+				    		}
+				    	}
+				    });
+				}); // $(document.ready)
+				/*]]>*/
+			</script>
+		</th:block>
+	</body>
+</html>

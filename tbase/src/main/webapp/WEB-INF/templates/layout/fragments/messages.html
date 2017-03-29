@@ -1,0 +1,20 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+	<div th:fragment="messages">
+		<div class="alert alert-success" role="alert" th:if="${msg != null}">
+			<span th:if="${#messages.msgOrNull('__${msg}__') eq null}" th:text="${msg}"></span>
+			<span th:if="${#messages.msgOrNull('__${msg}__') ne null}" th:text="${#messages.msg('__${msg}__')}"></span>
+		</div>
+		
+
+		<div class="alert alert-danger" role="alert" th:if="${errMsg != null}">
+			<span th:if="${#messages.msgOrNull('__${errMsg}__') eq null}" th:text="${errMsg}"></span>
+			<span th:if="${#messages.msgOrNull('__${errMsg}__') ne null}" th:text="${#messages.msg('__${errMsg}__')}"></span>
+		</div>
+	</div>
+</html>
+

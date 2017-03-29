@@ -1,0 +1,92 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+	<!--
+	Fragment for a modal dialog.
+	
+	Arguments:
+	dialogId: HTML id for the modal dialog container
+	dialogTitle: Human readable title for the dialog
+	dialogBody: A selected thymeleaf fragment to serve as the body section of this dialog
+	
+	How to use.
+	
+	1. Include this fragment in your page.  Substitute appropriate argument values.
+	
+	Notice how the third argument is a fragment selector for the "modalContentDiv" defined below.  You create your content within this div.  The content
+	you create is passed into the fragment to serve as the body.
+	
+	<div th:replace="fragments/dialog_fragments :: modalDialog('my-modal-dialog', 'My Modal Dialog', ~{::#modalContentDiv})">
+			
+		<div id="modalContentDiv" th:fragment="modalContentDiv">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h4>This is the body!</h4>
+			
+					<h5 th:text="${systemMessage}"></h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	2. Include this javascript to back whatever you are using to trigger the showing of your dialog.  In this example, it's a
+	button click handler which makes an ajax call to a Spring WebFlow 2 flow.
+	
+	You'll want to update the eventId to match your transition id.
+	
+	Notice the line: $("#my-modal-dialog-body").load(ajaxUrl);
+	The ID selector should be of the format: [dialogId]-body.  The dialog id is whatever id you passed into the modalDialog fragment.
+	
+	Notice the line: $("#my-modal-dialog").modal("show");
+	The ID selector should be of the format [dialogId].  Again, this is the ID that you passed into the modalDialog fragment. 
+	
+	$(document).ready(function() {
+		$("#dialogButton").click(function(evt) {
+			evt.preventDefault();
+			
+			var ajaxUrl = [[@{'~' + ${flowExecutionUrl}(_eventId='retrieveSystemMessage',ajaxSource='true')}]];
+	    	//  + " #my-modal-dialog-body-details"
+	    	$("#my-modal-dialog-body").load(ajaxUrl);
+	    	
+			$("#my-modal-dialog").modal("show");
+		});
+	});			 
+	
+	
+	3. In your flow definition, include something like this transition:
+	
+	<transition on="retrieveSystemMessage" bind="false">
+		<render fragments="modalContentDiv"></render>
+		<evaluate expression="userRegForm.systemMessage" result="viewScope.systemMessage"></evaluate>
+	</transition>
+		
+	Notice the render element.  We tell thymeleaf to return via ajax our "modelContentDiv" fragment - which we defined up there in step 1.	
+	 -->
+	<div th:fragment="modalDialog(dialogId, dialogTitle, dialogBody)">
+		<div th:id="${dialogId}" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+			
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" th:text="${dialogTitle}"></h4>
+					</div>
+					
+					<div th:id="${dialogId + '-body'}" th:fragment="${dialogId + '-body'}">
+						<div th:id="${dialogId + '-body-details'}" class="modal-body">
+							<th:block th:replace="${dialogBody}" />
+						</div>
+					</div>
+					
+					
+				</div> <!-- /.modal-content -->
+			</div> <!-- /.modal-dialog -->
+		</div> <!-- /.modal -->
+	</div>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<div th:fragment="select(userId)">
+		<a th:href="@{'~' + ${flowExecutionUrl}(_eventId='select', userId=${userId})}" class="btn btn-primary btn-xs">Select</a>
+	</div>
+	
+	<div th:fragment="edit(userId)">
+		<a th:href="@{'~' + ${flowExecutionUrl}(_eventId='edit', userId=${userId})}" class="btn btn-primary btn-xs">Edit</a>
+	</div>
+	
+	<div th:fragment="full(userId)">
+		<div class="dropdown">
+			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Actions
+				<span class="caret"></span>
+			</button>
+			
+			<ul class="dropdown-menu">
+				<li class="dropdown-header">User</li>
+				<li>
+					<a th:href="@{'~' + ${flowExecutionUrl}(_eventId='edit', userId=${userId})}">Edit</a>
+				</li>
+				
+				<li>
+					<a th:href="@{'~' + ${flowExecutionUrl}(_eventId='delete', userId=${userId})}">Delete</a>
+				</li>
+			</ul>
+		</div> 
+	</div>
+</html>

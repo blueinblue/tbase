@@ -1,0 +1,90 @@
+.login-title {
+	font-size: 2em;
+	font-family: "new century schoolbook";
+	font-variant: small-caps;
+}
+
+/* Ajax Loading Indicator */
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal-loading-indicator {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('../img/loading_indicator.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal-loading-indicator {
+    display: block;
+}
+/* End Ajax Loading Indicator */
+
+
+/* Input Field Styling */
+
+.custom-error-msg {
+	padding-top: 7px;	
+}
+
+.custom-help-block {
+	color: #737373 !important;
+}
+
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+
+/* Inline Form Field Styling */
+.inline-form-group {
+	margin-top: 15px;
+}
+
+.inline-form-static-control-label {
+	margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Inline bootstrap well */
+.inline-form-well {
+	float: left; 
+	margin-top: 0px; 
+	padding-top: 0px; 
+	padding-left: 0px; 
+	background-color: transparent;
+}
+/*
+DROP DOWN STYLING
+*/
+.btn-group-inline {
+	display: inline-flex;
+}
+
+.dropdown-header-strong {
+	font-size: 1.25em;
+}
+
+/* Helpful Styling Classes */
+.margin-top-15 {
+	margin-top: 15px;
+}
+	

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<role id="-100" object_id="ROLE-OBJ-100" version="1" name="ADMIN" created_by="-1" created_on="[now]"/>
+	<role id="-101" object_id="ROLE-OBJ-101" version="1" name="USER" created_by="-1" created_on="[now]"/>
+	
+	<!-- Admin User with ADMIN and USER role-->
+	<user id="-100" object_id="USER-OBJ-100" version="1" email="admin@mail.com" password="password" display_name="admin" enabled="1" created_by="-1" created_on="[now]"/>
+	<user_role user_id="-100" role_id="-100" />
+	<user_role user_id="-100" role_id="-101" />
+	
+	<!-- Regular User with USER role -->
+	<user id="-101" object_id="USER-OBJ-101" version="1" email="user@mail.com" password="password" display_name="reg_user" enabled="1" created_by="-1" created_on="[now]"/>
+	<user_role user_id="-101" role_id="-101" />
+	
+	<!-- Regular User with USER role -->
+	<user id="-102" object_id="USER-OBJ-102" version="1" email="joe@mail.com" password="password" display_name="joe_user" enabled="1" created_by="-1" created_on="[now]"/>
+	<user_role user_id="-102" role_id="-101" />
+	
+	<!-- Regular User with USER role -->
+	<user id="-103" object_id="USER-OBJ-103" version="1" email="frank@mail.com" password="password" display_name="frank_user" enabled="1" created_by="-1" created_on="[now]"/>
+	<user_role user_id="-103" role_id="-101" />
+	
+	<!-- Regular User with USER role -->
+	<user id="-104" object_id="USER-OBJ-104" version="1" email="ted@mail.com" password="password" display_name="ted_user" enabled="1" created_by="-1" created_on="[now]"/>
+	<user_role user_id="-104" role_id="-101" />
+	
+	<!-- Regular User with USER role -->
+	<user id="-105" object_id="USER-OBJ-105" version="1" email="bill@mail.com" password="password" display_name="bill_user" enabled="1" created_by="-1" created_on="[now]"/>
+	<user_role user_id="-105" role_id="-101" />
+</dataset>

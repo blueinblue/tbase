@@ -1,0 +1,63 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+	
+<head>
+	<title>Admin Dashboard</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				Admin Dashboard
+			</div>
+			
+			<div class="panel-body">
+				Welcome to the Admin Dashboard, <span sec:authentication="name"></span>.
+			</div>
+		</div>
+		
+		<form th:action="@{/admin/dashboard}" th:object="${formBean}" method="post" class="form-inline">
+					
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Editor
+				</div>
+				
+				<div class="panel-body">
+						<div class="form-group">
+							<label for="userName">User Name</label>
+							<input type="text" class="form-control" th:field="*{userName}" placeholder="User Name"></input>
+						</div>
+				
+					<!-- 
+					<div th:replace="fragments/horz_form_fragments :: static-sm('id', 'ID')"></div>
+				
+					<div th:replace="fragments/horz_form_fragments :: text-md('userName', 'User Name')"></div>
+					
+					<div th:replace="fragments/horz_form_fragments :: yesNoRB('happy', 'You Happy?')"></div>
+					
+					<div th:replace="fragments/horz_form_fragments :: stackedCB('interests', 'Interests', ${allInterests})"></div>
+					
+					<div th:replace="fragments/horz_form_fragments :: dropDown-md('primaryInterest', 'Primary Interest', ${allInterests}, true)"></div>
+					
+					<div th:replace="fragments/horz_form_fragments :: textArea-lg('message', 'Message', 5)"></div>
+					-->
+					
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary" th:value="Save" name="save" />
+					</div>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+	
+</body>
+
+</html>

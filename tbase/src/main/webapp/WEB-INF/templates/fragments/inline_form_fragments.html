@@ -1,0 +1,492 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<!-- Text Fields -->
+	<div th:fragment="text-xs(fieldName, placeholderText)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="text-sm(fieldName, placeholderText)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="text-md(fieldName, placeholderText)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="text-lg(fieldName, placeholderText)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="text-xl(fieldName, placeholderText)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="text-xxl(fieldName, placeholderText)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<!-- Text Fields with Labels-->
+	<div th:fragment="lbl-text-xs(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-text-sm(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-text-md(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-text-lg(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-text-xl(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-text-xxl(fieldName, label)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, 'text',
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	
+	<!-- Input Fields - User specified type -->
+	<div th:fragment="input-xs(fieldName, placeholderText, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="input-sm(fieldName, placeholderText, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="input-md(fieldName, placeholderText, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="input-lg(fieldName, placeholderText, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="input-xl(fieldName, placeholderText, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="input-xxl(fieldName, placeholderText, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, '', false, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	
+	<!-- Text Fields with Labels-->
+	<div th:fragment="lbl-input-xs(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-input-sm(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-input-md(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-input-lg(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-input-xl(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-input-xxl(fieldName, label, inputType)" th:remove="tag">
+		<div th:replace=":: fieldInput(${fieldName}, ${label}, true, ${placeholderText}, ${inputType},
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<!-- A field input -->
+	<div th:fragment="fieldInput(fieldName, label, showLabel, placeholderText, inputType, containerWidthClass)">
+		<div class="form-group inline-form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''} + ' ' + ${#bools.isTrue(required) ? 'required' : ''} + ' ' + ${#strings.isEmpty(containerWidthClass) ? '' : '__${containerWidthClass}__'}">
+			<div class="input-group" style="width: 100% !important">
+				<label th:for="${fieldName}" th:text="${label}" th:classappend="${#bools.isTrue(showLabel) ? 'control-label' : 'sr-only'}"></label>
+				
+				<input th:type="${inputType}" class="form-control" th:field="*{__${fieldName}__}" th:placeholder="${#strings.isEmpty(placeholderText) ? '' : '__${placeholderText}__'}" />
+				
+				<div class="text-danger" th:errors="*{__${fieldName}__}">Error Message</div>
+					
+				<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false and #fields.hasErrors('__${fieldName}__') eq false}"></p>
+			</div>
+		</div>
+	</div>	
+	
+	
+	<!-- Inline Yes/No Radio Buttons-->
+	<div th:fragment="yesNoRB(fieldName, label, showLabel, containerWidthClass)">
+		<div th:replace=":: inlineRB(${fieldName}, ${label}, ${showLabel}, ${T(org.bib.tbase.domain.display.YesNoDisplayable).values()}, ${containerWidthClass})">
+		</div>
+	</div>
+	
+	<!-- Inline Radio Buttons; dispValues must be a collection of Displayable instances -->
+	<div th:fragment="inlineRB(fieldName, label, showLabel, dispValues, containerWidthClass)">
+		<div th:replace=":: selectGroup(${fieldName}, ${label}, ${showLabel}, 'radio', true, ${dispValues}, ${containerWidthClass})">
+		</div>
+	</div>
+	
+	<!-- Inline Checkboxes; dispValues must be a collection of Displayable instances -->
+	<div th:fragment="inlineCB(fieldName, label, showLabel, dispValues, containerWidthClass)">
+		<div th:replace=":: selectGroup(${fieldName}, ${label}, ${showLabel}, 'checkbox', true, ${dispValues}, ${containerWidthClass})">
+		</div>
+	</div>
+	
+	<!-- Stacked Radio Buttons; dispValues must be a collection of Displayable instances -->
+	<div th:fragment="stackedRB(fieldName, label, showLabel, dispValues, containerWidthClass)">
+		<div th:replace=":: selectGroup(${fieldName}, ${label}, ${showLabel}, 'radio', false, ${dispValues}, ${containerWidthClass})">
+		</div>
+	</div>
+	
+	<!-- Stacked Check Boxes; dispValues must be a collection of Displayable instances -->
+	<div th:fragment="stackedCB(fieldName, label, showLabel, dispValues, containerWidthClass)">
+		<div th:replace=":: selectGroup(${fieldName}, ${label}, ${showLabel}, 'checkbox', false, ${dispValues}, ${containerWidthClass})">
+		</div>
+	</div>
+	
+	<!--
+		A group of checkboxes or radio buttons, displayed either inline or stacked, backed by a Collection of Displayable instances.
+		
+		inputType: radio or checkbox, required
+		isInline: true/false, true if options appear on the same line; false, if they should stack
+		values: a Collection of Displayable instances 
+	 -->
+	<div th:fragment="selectGroup(fieldName, label, showLabel, inputType, isInline, values, containerWidthClass)">
+		<div class="form-group inline-form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''} + ' ' + ${#bools.isTrue(required) ? 'required' : ''} + ' ' + ${#strings.isEmpty(containerWidthClass) ? '' : '__${containerWidthClass}__'}">
+		
+			<div class="input-group" style="width: 100% !important">
+				<label th:for="${fieldName}" th:text="${label}" th:classappend="${#bools.isTrue(showLabel) ? 'control-label' : 'sr-only'}"></label>
+				
+				<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false and #fields.hasErrors('__${fieldName}__') eq false}"></p>
+				
+			<div th:style="${isInline eq false ? 'padding-left: 20px;' : ''}">
+				<label th:each="dispObj, iterStat : ${values}" th:class="${inputType + '-inline'}" th:style="${isInline ? 'margin-left: 10px !important; font-weight: normal;' : 'display: block !important; margin-left: 0px !important; font-weight: normal;'}">
+					
+					<input th:type="${inputType}" th:field="*{__${fieldName}__}" th:value="${dispObj.value}"></input>
+					<span th:text="${dispObj.displayName}"></span>
+				</label>
+			</div>
+			
+			<div class="text-danger custom-error-msg" th:errors="*{__${fieldName}__}"></div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Drop Downs -->
+	<div th:fragment="lbl-dropDown-xs(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, true, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-dropDown-sm(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, true, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-dropDown-md(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, true, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-dropDown-lg(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, true, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-dropDown-xl(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, true, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-dropDown-xxl(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, true, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	
+	<div th:fragment="dropDown-xs(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, false, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="dropDown-sm(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, false, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="dropDown-md(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, false, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="dropDown-lg(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, false, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="dropDown-xl(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, false, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="dropDown-xxl(fieldName, label, values, includeEmpty)">
+		<div th:replace=":: dropDown(${fieldName}, ${label}, false, ${values}, ${includeEmpty},
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<!--
+		Drop down select, backed by a Collection of Displayable instances.
+		
+		values: A Collection of Displayable instances, never null
+		includeEmpty: true/false, if true then an empty option is included in the list
+		containerWidthClass: Bootstrap width class for container form-group, ie col-md-6 
+	 -->
+	<div th:fragment="dropDown(fieldName, label, showLabel, values, includeEmpty, containerWidthClass)">
+		<div class="form-group inline-form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''} + ' ' + ${#bools.isTrue(required) ? 'required' : ''}  + ' ' + ${#strings.isEmpty(containerWidthClass) ? '' : '__${containerWidthClass}__'}">
+			
+			<div class="input-group" style="width: 100% !important;">
+				<label th:for="${fieldName}" class="control-label" th:text="${label}" th:classappend="${#bools.isTrue(showLabel) ? 'control-label' : 'sr-only'}"></label>
+				
+				<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false}"></p>
+				
+				<div>
+					<select class="form-control" th:field="*{__${fieldName}__}" style="width: 100% !important;">
+						<option th:value="${null}" th:text="${''}" th:if="${includeEmpty}"></option>
+						<option th:each="dispObj : ${values}"
+							th:value="${dispObj.value}" th:text="${dispObj.displayName}" />
+					</select>
+				</div>
+			</div>
+			
+			<div class="text-danger custom-error-msg" th:errors="*{__${fieldName}__}"></div>
+		</div>
+	</div>
+	
+	
+	<!--
+		Bootstrap Multi-Select, backed by a Collection of Displayable instances
+	 -->
+	 <div th:fragment="lbl-multiDropDown-xs(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, true, ${values},
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-multiDropDown-sm(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, true, ${values},
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-multiDropDown-md(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, true, ${values},
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-multiDropDown-lg(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, true, ${values},
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-multiDropDown-xl(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, true, ${values},
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="lbl-multiDropDown-xxl(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, true, ${values},
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	
+	<div th:fragment="multiDropDown-xs(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, false, ${values},
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown-sm(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, false, ${values},
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown-md(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, false, ${values},
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown-lg(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, false, ${values},
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown-xl(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, false, ${values},
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown-xxl(fieldName, label, values)">
+		<div th:replace=":: multiDropDown(${fieldName}, ${label}, false, ${values},
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="multiDropDown(fieldName, label, showLabel, values, containerWidthClass)">
+		<div class="form-group inline-form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''} + ' ' + ${#bools.isTrue(required) ? 'required' : ''}  + ' ' + ${#strings.isEmpty(containerWidthClass) ? '' : '__${containerWidthClass}__'}">
+			<div class="input-group" style="width: 100% !important">
+				<label th:for="${fieldName}" class="control-label" th:text="${label}" th:classappend="${#bools.isTrue(showLabel) ? 'control-label' : 'sr-only'}"></label>
+				
+				<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false}"></p>
+				
+				<div>
+					<select class="selectpicker form-control" data-style="btn-default" multiple="multiple" th:field="*{__${fieldName}__}">
+						<option th:each="dispObj : ${values}" th:value="${dispObj.value}" th:text="${dispObj.displayName}" />
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Static Field -->
+	<div th:fragment="staticField(fieldName, label, showLabel, containerWidthClass)">
+		<div class="form-group inline-form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''}  + ' ' + ${#strings.isEmpty(containerWidthClass) ? '' : '__${containerWidthClass}__'}">
+			
+			<div class="input-group" style="width: 100% !important">
+				<label th:for="${fieldName}" class="control-label inline-form-static-control-label" th:classappend="${#bools.isTrue(showLabel) ? 'control-label' : 'sr-only'}" th:text="${label}"></label>
+				
+				<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false}" style="margin-top: -5px !important;"></p>
+				
+				<p class="form-control-static" th:text="*{__${fieldName}__}"></p>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!--  Text Area -->
+	<div th:fragment="textArea-xs(fieldName, label, showLabel, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${showLabel}, ${rows}, 
+			${@fragmentLayout.get('inlineForm-xs-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="textArea-sm(fieldName, label, showLabel, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${showLabel}, ${rows}, 
+			${@fragmentLayout.get('inlineForm-sm-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="textArea-md(fieldName, label, showLabel, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${showLabel}, ${rows}, 
+			${@fragmentLayout.get('inlineForm-md-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="textArea-lg(fieldName, label, showLabel, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${showLabel}, ${rows}, 
+			${@fragmentLayout.get('inlineForm-lg-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="textArea-xl(fieldName, label, showLabel, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${showLabel}, ${rows}, 
+			${@fragmentLayout.get('inlineForm-xl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="textArea-xxl(fieldName, label, showLabel, rows)">
+		<div th:replace=":: textAreaField(${fieldName}, ${label}, ${showLabel}, ${rows}, 
+			${@fragmentLayout.get('inlineForm-xxl-containerWidthClass')})">
+		</div>
+	</div>
+	
+	<div th:fragment="textAreaField(fieldName, label, showLabel, rows, containerWidthClass)">
+		<div class="form-group inline-form-group" th:classappend="${#fields.hasErrors('__${fieldName}__') ? 'has-error' : ''}  + ' ' + ${#bools.isTrue(required) ? 'required' : ''}  + ' ' + ${#strings.isEmpty(containerWidthClass) ? '' : '__${containerWidthClass}__'}">
+		
+			<div class="input-group" style="width: 100% !important">
+				<label th:for="${fieldName}" class="control-label" th:classappend="${#bools.isTrue(showLabel) ? 'control-label' : 'sr-only'}" th:text="${label}"></label>
+				
+				<p class="help-block custom-help-block" th:text="${helpText}" th:if="${#strings.isEmpty(helpText) eq false}" style="margin-top: -5px !important;"></p>
+				
+				<textarea class="form-control" th:field="*{__${fieldName}__}" th:rows="${rows}" th:placeholder="${#strings.isEmpty(placeholderText) ? '' : '__${placeholderText}__'}"></textarea>
+			</div>
+			
+			<div class="text-danger custom-error-msg" th:errors="*{__${fieldName}__}"></div>
+		</div>
+	</div>
+</html>

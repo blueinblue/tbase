@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	version="3.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	metadata-complete="false">
+	
+	<!-- TODO: Package Fix for ArcheType -->
+	<display-name>TBase Web App</display-name>
+
+	<!-- Log4j2 Requires this parameter to be defined in web.xml; perhaps we 
+		can remove when Spring adds a log4j2 initializer (Oct 2014 - only a log4j 
+		v1.2 init exists) -->
+	<context-param>
+		<param-name>log4jConfiguration</param-name>
+		<param-value>classpath:appconfig/${sys:spring.profiles.active}/log4j2.xml</param-value>
+	</context-param>
+
+</web-app>

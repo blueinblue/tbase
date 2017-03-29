@@ -1,0 +1,55 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+	
+<head>
+	<title>Error</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h3>Error</h3>
+		
+		<p class="help-block">An error occured while processing your request.</p>
+		
+		<div class="panel panel-default" th:if="${rootStackTrace ne null}">
+			<div class="panel-heading">
+				Root Exception Message
+			</div>
+			
+			<div class="panel-body">
+				<span th:text="${rootStackTrace[0]}"></span>
+			</div>
+		</div>
+		
+		<div class="panel panel-default" th:if="${ex ne null}">
+			<div class="panel-heading">
+				Leaf Exception Message
+			</div>
+			
+			<div class="panel-body">
+				<span th:text="${ex.message}"></span>
+			</div>
+		</div>
+		
+		<div class="panel panel-default" th:if="${rootStackTrace ne null}">
+			<div class="panel-heading">
+				Stack Trace
+			</div>
+			
+			<div class="panel-body">
+				<ul class="list-unstyled">
+					<li th:each="ste : ${rootStackTrace}">
+						<span th:text="${ste}">${ste}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+</body>
+
+</html>

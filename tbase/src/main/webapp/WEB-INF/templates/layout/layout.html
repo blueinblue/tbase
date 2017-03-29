@@ -1,0 +1,114 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1"/>
+	
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+		
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/public/css/main.css}"/>
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/webjars/jquery-ui/jquery-ui.css}" />
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/webjars/bootstrap-select/css/bootstrap-select.min.css}" />
+	
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/public/libs/selectlistactions/selectlistactions.css}"/>
+	
+	<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE" th:text="${@environment.getProperty('app.title')}"></title>
+	
+</head>
+
+<body>
+	<div class="container">
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div layout:fragment="header">
+					<div th:replace="layout/fragments/header :: header">
+						Header
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div layout:fragment="menu">
+					<div th:replace="layout/fragments/menu :: menu">
+						Navigation
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div layout:fragment="content">
+				<h1>Test content</h1>
+			</div>
+		</div>
+		
+		
+		<div class="page-footer">
+			<div th:replace="layout/fragments/footer :: footer">
+				<p>Footer</p>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap-select/js/bootstrap-select.min.js}"></script>
+	<script type="text/javascript" th:src="@{/public/js/main.js}"></script>
+	
+	<script type="text/javascript" th:src="@{/public/libs/selectlistactions/jquery.selectlistactions.js}"></script>
+	
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	    // Global ajax handler (complete covers both success and failure) that will redirect to the login page
+		$(document).ready(function() {
+			/*
+				Add an ajaxComplete handler to check for session expired; if it's expired forward to the login page
+			*/
+			
+			var loginUrl = /*[[@{${@sessionExpiredUrl.toString()} + '?errCode=SE'}]]*/;
+				
+			var errUrl =   /*[[@{${'/syspublic/error'}}]]*/;
+			
+			$(document).ajaxComplete(function(event, xhr, settings) {
+				// 902 is special code defined in the PathMatchingRedirectInvalidSessionStrategy class
+	    		if (xhr.status === 902) {
+	    	        // redirect to login
+	    	        window.location = loginUrl;
+	    	    }
+	    		else if(xhr.status === 900) {
+	    			window.location = errUrl;
+	    		}
+				
+				
+			});
+			
+			/*
+				Add an ajaxSend handler that sets the CSRF token/header for each ajax request.
+			*/
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(document).ajaxSend(function(e, xhr, options) {
+				xhr.setRequestHeader(header, token);
+			});
+		});
+	/*]]>*/
+	</script>
+							    	    
+	<th:block layout:fragment="script">
+		<!-- Page Specific Scripts -->
+	</th:block>
+	
+	<!-- DIV for showing Loading Indicator during AJAX requests -->
+	<div class="modal-loading-indicator">
+	</div>
+</body>
+
+</html>

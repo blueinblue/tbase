@@ -1,0 +1,57 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+	
+	<head>
+		<title>User Registration - Confirm Email</title>
+	</head>
+	
+	<body>
+		<div layout:fragment="content">
+			<!-- Global Status/Error Messages -->
+			<div th:replace="layout/fragments/messages :: messages">
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					New User Registration
+				</div>
+				<div class="panel-body">
+					<div class="col-md-12">
+						<h4>
+							We've e-mailed you a confirmation code.  Once you receive it, please enter it below to confirm your account.
+						</h4>
+						
+					</div>
+					
+					<form th:action="${flowExecutionUrl}" th:object="${userRegForm}" method="post" class="form-horizontal">
+						
+						<div th:replace="fragments/horz_form_fragments :: text-md('emailConfirmationCode', 'Confirmation Code')"></div>
+						
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" name="_eventId_submit" class="btn btn-primary">Verify</button>
+								
+								<a class="btn btn-default" th:href="@{'~' + ${flowExecutionUrl}(_eventId='resend')}">Send Again</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+		</div> <!-- Content Container -->
+		
+		<th:block layout:fragment="script">
+			<script th:inline="javascript">
+			/*<![CDATA[*/
+				$(document).ready(function() {
+				    $("#emailConfirmationCode").focus();
+				}); // $(document.ready)
+				/*]]>*/
+			</script>
+		</th:block>
+	</body>
+</html>

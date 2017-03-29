@@ -1,0 +1,41 @@
+**
+Modify the following files after generating the archetype to correct improper substitution.
+
+PagingConfig
+ - Import statements at top for pagination package
+ 
+ UserRepositoryTest
+  - Import statements
+  
+ UserSearchAction
+  - Import statements
+  
+** 
+Modify the eclipse config file: src/main/resources/archtype-resources/.settings/org.eclipse.wst.common.component
+- Add to the top of the file:
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+
+- Change the line
+	<property name="context-root" value="tbase"/>
+  to
+  	<property name="context-root" value="${rootArtifactId}"/>
+ 
+ 
+**
+Modify the properties file: main/resources/appconfig/application.properties
+- Add the maven #set header
+
+- Change the line
+	app.title=TBase
+  to
+  	app.title=${rootArtifactId}
+ 
+ Re-Creating The Archetype
+ - Modify the base project as necessary.
+ - At command line at base project root,
+ 	mvn clean
+ 
+ 	mvn archetype:create-from-project
+ 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+	
+	<!-- /system/userreg -->
+	<var name="userRegForm" class="org.bib.tbase.web.flow.system.userreg.UserRegForm"/>
+	
+	
+	<!-- View to gather essential attributes from user -->
+	<view-state id="enterUserDetails" view="system/userreg/userRegDetail" model="userRegForm" validation-hints="'userEssentials'">
+		<binder>
+			<binding property="email"/>
+			<binding property="displayName"/>
+			<binding property="password"/>
+			<binding property="passwordConfirm"/>
+			<binding property="interests"/>
+			<binding property="primaryInterest"/>
+			<binding property="message" />
+		</binder>
+		
+		<!-- AJAX request that returns a fragment -->
+		<transition on="retrieveSystemMessage" bind="false">
+			<render fragments="modalContentDiv"></render>
+			<evaluate expression="userRegForm.systemMessage" result="requestScope.systemMessage"></evaluate>
+		</transition>
+		
+		<transition on="next" to="sendEmailChallengeCode" />
+	</view-state>
+	
+	<action-state id="sendEmailChallengeCode">
+		<evaluate expression="userRegistrationService.sendEmailChallengeCode(userRegForm.email, userRegForm.emailChallengeCode)" />
+		
+		<transition on="success" to="enterEmailConfirmationCode" />
+		
+		
+		<transition on="error" to="enterUserDetails">
+			<set name="flashScope.errMsg" value="'An error occured please try again.'"></set>
+		</transition>
+	</action-state>
+	
+	<view-state id="enterEmailConfirmationCode" view="system/userreg/userRegConfirmEmail" model="userRegForm" validation-hints="'emailVerification'">
+		<transition on="submit" to="registerUser" />
+		
+		<transition on="resend" to="sendEmailChallengeCode"/>
+	</view-state>
+	
+	<action-state id="registerUser">
+		<evaluate expression="userRegistrationService.registerUser(userRegForm)" result="flowScope.secureUser" />
+		
+		<transition on="success" to="registrationCompleted"/>
+	</action-state>
+	
+	<!-- Hands control over to the UserRegFlowHandler so we can programatically login the user -->
+	<end-state id="registrationCompleted" >
+		<output name="secureUser" value="secureUser"/>
+	</end-state>
+</flow>

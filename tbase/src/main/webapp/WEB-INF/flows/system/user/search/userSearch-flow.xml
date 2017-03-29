@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+	
+	<!-- system/user/search -->
+	<var name="userSearchForm" class="org.bib.tbase.web.flow.system.user.search.UserSearchForm" />
+	
+	<!-- Command Fragment - Specifies what commands to display -->
+	<input name="commandFragment" required="true" type="java.lang.String"/>
+	
+	<on-start>
+		<evaluate expression="roleService.findAll(new org.springframework.data.domain.Sort('name'))" result="flowScope.allRoles"/>
+	</on-start>
+	
+	<!-- View to show search fields -->
+	<view-state id="enterSearchCriteria" view="system/user/search/userSearch" model="userSearchForm">
+		<transition on="search" to="executeSearch">
+			<evaluate expression="pageRequestFactory.newPageRequest(0, 'email:ASC')" result="flowScope.userPageRequest" />
+		</transition>
+		
+		<!-- Edit the user -->
+		<transition on="edit" to="editUser"/>
+		
+		<!-- Delete the user -->
+		<transition on="delete" to="deleteUser"/>
+		
+		<!-- AJAX Requests -->
+		<transition on="pageRequest" bind="false">
+			<render fragments="userTableFragment"></render>
+			
+			<evaluate expression="pageRequestFactory.newPageRequest(requestParameters.pageNumber, requestParameters.sort)" result="flowScope.userPageRequest" />
+			
+			<evaluate expression="userSearchAction.executeSearch(userSearchForm, userPageRequest, flowRequestContext)" />
+		</transition>
+		<!-- End AJAX Requests -->
+	</view-state>
+	
+	<action-state id="executeSearch">
+		<evaluate expression="userSearchAction.executeSearch(userSearchForm, userPageRequest, flowRequestContext)"/>
+		
+		<transition on="success" to="enterSearchCriteria" />
+	</action-state>
+	
+	<action-state id="deleteUser">
+		<evaluate expression="userSearchAction.deleteUser(requestParameters.userId, flowRequestContext)" />
+		
+		<transition to="executeSearch" />
+	</action-state>
+	
+	<!-- SubFlow for editing user -->
+	<subflow-state id="editUser" subflow="system/user/edit">
+		<input name="userId" value="requestParameters.userId" />
+		
+		<transition to="executeSearch" />
+	</subflow-state>
+</flow>

@@ -1,0 +1,28 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+	
+<head>
+	<title>User Dashboard</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				User Dashboard
+			</div>
+			
+			<div class="panel-body">
+				Welcome to the User Dashboard, <span sec:authentication="name"></span>.
+			</div>
+		</div>
+	</div>
+	
+</body>
+
+</html>

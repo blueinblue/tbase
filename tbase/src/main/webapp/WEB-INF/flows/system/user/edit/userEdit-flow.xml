@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+    
+	<!-- system/user/edit -->
+	<input name="userId" required="false" type="java.lang.Long" />
+	
+	<on-start>
+		<evaluate expression="roleService.findAll(new org.springframework.data.domain.Sort('name'))" result="flowScope.allRoles" />
+		
+		<evaluate expression="userEditAction.createUserEditForm(userId)" result="flowScope.userEditForm" />
+	</on-start>
+	
+	<!-- View to show search fields -->
+	<view-state id="enterUserDetails" view="system/user/edit/userEdit" model="userEditForm">
+		<transition on="save" to="enterUserDetails">
+			<evaluate expression="userEditAction.saveUser(userEditForm, flowRequestContext)" />
+		</transition>
+		
+		<transition on="close" to="closeEditor" />
+	
+		<!-- AJAX request that returns a fragment -->
+		<transition on="applyRoleGroup" bind="false">
+			<render fragments="currentRolesFragment"/>
+			
+			<evaluate expression="userEditForm.user.setRoles(roleService.getRolesForRoleSet(requestParameters.roleSet))"></evaluate>
+		</transition>
+		
+		<transition on="saveNote" bind="false">
+			<render fragments="userNotesTable" />
+			
+			<evaluate expression="userEditAction.saveNote(userEditForm, flowRequestContext)" />
+		</transition>
+	</view-state>
+	
+	<end-state id="closeEditor" view="redirect:/secure/home">
+		<output name="userId" value="userEditForm?.user?.id"/>
+	</end-state>
+	
+</flow>
