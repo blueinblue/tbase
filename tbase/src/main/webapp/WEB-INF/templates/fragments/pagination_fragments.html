@@ -54,8 +54,10 @@
 		dataReqEventIdStr: The Spring WebFlow event ID to submit when requesting a new data page (or in this case, a sorted data page)
 	 -->
 	<div th:fragment="pagerSortHeader(headerStr, propertyNameStr, page, dataReqEventIdStr)">
-		<a class="pager-link" th:href="@{'~' + ${flowExecutionUrl}(_eventId=${dataReqEventIdStr},ajaxSource='true',pageNumber=${page.number},sort=(${page.sort?.getOrderFor('__${propertyNameStr}__')?.ascending} ? '__${propertyNameStr}__: DESC' : '__${propertyNameStr}__: ASC'))}"
-			th:text="${headerStr}">
+		<a class="pager-link" th:href="@{'~' + ${flowExecutionUrl}(_eventId=${dataReqEventIdStr},ajaxSource='true',pageNumber=${page.number},sort=(${page.sort?.getOrderFor('__${propertyNameStr}__')?.ascending} ? '__${propertyNameStr}__: DESC' : '__${propertyNameStr}__: ASC'))}">
+			<span th:text="${headerStr}"></span>
+			<span class="glyphicon glyphicon-arrow-up" th:if="${page.sort?.getOrderFor('__${propertyNameStr}__')?.ascending}"></span>
+			<span class="glyphicon glyphicon-arrow-down" th:if="${page.sort?.getOrderFor('__${propertyNameStr}__')?.descending}"></span>
 		</a>
 	</div>
 </html>
